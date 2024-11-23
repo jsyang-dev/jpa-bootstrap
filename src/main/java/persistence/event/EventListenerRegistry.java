@@ -23,7 +23,7 @@ public class EventListenerRegistry {
 
     public void registerEventListener(EventType<? extends EventListener> eventType, EventListener... eventListeners) {
         final EventListenerGroup<EventListener> eventListenerGroup =
-                eventListenerGroupRegistry.getOrDefault(eventType, new EventListenerGroup<>(eventType));
+                eventListenerGroupRegistry.computeIfAbsent(eventType, e -> new EventListenerGroup<>(eventType));
         for (EventListener eventListener : eventListeners) {
             eventListenerGroup.appendListener(eventListener);
         }
